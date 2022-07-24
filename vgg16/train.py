@@ -12,7 +12,7 @@ files = os.listdir(root)
 dataset = CatsAndDogsData(root)
 dataloader = torch.utils.data.DataLoader(dataset, batch_size=4, shuffle=True)
 
-criterion = torch.nn.BCELoss()
+criterion = torch.nn.CrossEntropyLoss()
 optimizer = torch.optim.SGD(model.parameters(), lr=0.001)
 
 epochs = 2
@@ -21,12 +21,12 @@ for epoch in range(epochs):
     curr_loss = 0.0
     for index, data in enumerate(dataloader):
         image, label = data
-        label = label.reshape((label.shape[0], 1))
+        # label = label.reshape((label.shape[0], 1))
         optimizer.zero_grad()
         # label = label.float()
-        print(label)
         image = image.to(device)
-        label = label.to(device)
+        label = label.to(device).unsqueeze(1).float()
+        print(label)
 
         output = model(image)
         print(output)
@@ -35,7 +35,6 @@ for epoch in range(epochs):
         curr_loss += loss.item()
         loss.backward()
         optimizer.step()
-
 
         print(index, curr_loss)
 

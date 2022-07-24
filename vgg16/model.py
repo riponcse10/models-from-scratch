@@ -81,12 +81,12 @@ class Vgg16Model(nn.Module):
         )
         self.fc2 = nn.Sequential(
             nn.Dropout(0.5),
-            nn.Linear(4096, 4096),
+            nn.Linear(4096, 2048),
             nn.ReLU()
         )
         self.fc3 = nn.Sequential(
-            nn.Linear(4096, 1, bias=True),
-            nn.Sigmoid()
+            nn.Linear(2048, 2, bias=True),
+            # nn.Sigmoid()
         )
 
 
